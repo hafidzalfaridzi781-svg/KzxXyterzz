@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Kaizye Store | Langit Ungu & Efek Kece</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #0a0a2a 0%, #1a0b3a 50%, #2c0e4a 100%);
+      min-height: 100vh;
+      color: #f3e9ff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animasi langit bergerak - bintang & nebula */
+    .sky-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      animation: starMove 60s linear infinite;
+    }
+
+    .stars::before, .stars::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(2px 2px at 20px 40px, #fff, rgba(0,0,0,0)),
+                        radial-gradient(1px 1px at 80px 200px, #fdf8c4, rgba(0,0,0,0)),
+                        radial-gradient(3px 2px at 300px 100px, #ffd6ff, rgba(0,0,0,0));
+      background-repeat: no-repeat;
+      background-size: 250px 250px, 350px 350px, 400px 400px;
+      opacity: 0.7;
+    }
+
+    @keyframes starMove {
+      0% { transform: translateY(0px) translateX(0px);}
+      100% { transform: translateY(-200px) translateX(50px);}
+    }
+
+    /* Awan / nebula bergerak */
+    .nebula {
+      position: fixed;
+      width: 200%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 40%, rgba(156, 79, 229, 0.25), transparent 60%),
+                  radial-gradient(circle at 80% 70%, rgba(105, 48, 195, 0.3), transparent 70%);
+      filter: blur(65px);
+      animation: driftNebula 32s infinite alternate ease-in-out;
+      z-index: -1;
+    }
+
+    @keyframes driftNebula {
+      0% { transform: translateX(-10%) translateY(-5%) rotate(0deg); opacity: 0.6; }
+      100% { transform: translateX(10%) translateY(8%) rotate(2deg); opacity: 1; }
+    }
+
+    /* Partikel floating */
+    .floating-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(210, 160, 255, 0.5);
+      border-radius: 50%;
+      filter: blur(4px);
+      animation: floatParticle 14s infinite;
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      20% { opacity: 0.9; }
+      100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+    }
+
+    /* Container utama */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 4rem;
+      position: relative;
+      backdrop-filter: blur(2px);
+    }
+
+    /* header glow */
+    .header {
+      text-align: center;
+      padding: 2rem 0 1.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(180, 130, 255, 0.4);
+      background: radial-gradient(ellipse at top, rgba(110, 50, 180, 0.3), transparent);
+      border-radius: 0 0 50px 50px;
+      animation: headerGlow 3s infinite alternate;
+    }
+
+    @keyframes headerGlow {
+      0% { text-shadow: 0 0 2px #b77eff; box-shadow: 0 5px 15px rgba(128, 0, 255, 0.1);}
+      100% { text-shadow: 0 0 12px #d9a7ff; box-shadow: 0 8px 28px rgba(156, 71, 255, 0.4);}
+    }
+
+    .header h1 {
+      font-size: 2.6rem;
+      background: linear-gradient(135deg, #f2e6ff, #cdadff, #b77eff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1px;
+    }
+
+    .badge-update {
+      background: #5900b3aa;
+      display: inline-block;
+      padding: 0.3rem 1.2rem;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+      margin-top: 12px;
+      border: 1px solid #c08aff;
+    }
+
+    .contact-bar {
+      background: #2d1b44cc;
+      backdrop-filter: blur(16px);
+      border-radius: 80px;
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0 30px;
+      border: 1px solid #ad7eff;
+    }
+
+    .contact-bar span {
+      font-weight: 500;
+    }
+    .contact-bar i {
+      margin-right: 6px;
+      color: #e0b0ff;
+    }
+    .whatsapp-btn, .telegram-btn {
+      background: linear-gradient(45deg, #3a1c68, #261349);
+      padding: 5px 14px;
+      border-radius: 50px;
+      transition: 0.2s;
+      cursor: pointer;
+      border: 1px solid #ad6eff;
+    }
+
+    .whatsapp-btn:hover, .telegram-btn:hover {
+      transform: scale(1.05);
+      background: #572c96;
+      box-shadow: 0 0 12px #bb8aff;
+    }
+
+    /* grid produk */
+    .produk-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 24px;
+      margin: 2rem 0;
+    }
+
+    /* card animasi + efek klik */
+    .card {
+      background: rgba(25, 15, 45, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 32px;
+      padding: 1.2rem 1rem;
+      transition: all 0.25s ease;
+      border: 1px solid rgba(170, 110, 255, 0.5);
+      box-shadow: 0 12px 28px -8px rgba(0,0,0,0.4);
+      cursor: pointer;
+      animation: cardFloat 5s infinite ease alternate;
+      transform-origin: center;
+    }
+
+    @keyframes cardFloat {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-8px); }
+    }
+
+    /* efek klik .card-click */
+    .card-click-effect {
+      transform: scale(0.96) !important;
+      transition: transform 0.07s cubic-bezier(0.2, 1.2, 0.8, 1);
+      filter: brightness(1.1);
+      border-color: #ffb86c;
+      box-shadow: 0 0 20px #e29eff;
+    }
+
+    .card:hover {
+      border-color: #daa2ff;
+      box-shadow: 0 20px 32px -12px #a55eff80;
+      background: rgba(45, 25, 70, 0.8);
+    }
+
+    .nama-produk {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      background: linear-gradient(125deg, #fff, #e5cbff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .harga {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffdd88;
+      text-shadow: 0 0 4px #ffb347;
+      margin: 8px 0;
+    }
+
+    .btn-beli {
+      background: linear-gradient(95deg, #824cff, #4c1c95);
+      border: none;
+      color: white;
+      font-weight: bold;
+      padding: 10px 0;
+      width: 100%;
+      border-radius: 40px;
+      margin-top: 12px;
+      font-size: 1rem;
+      transition: all 0.2s;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid #c49eff;
+    }
+
+    .btn-beli:active {
+      transform: scale(0.96);
+    }
+
+    .badge-kategori {
+      background: #2c115b;
+      display: inline-block;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    /* tombol filter rapi */
+    .filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0 10px;
+    }
+
+    .filter-btn {
+      background: #2b1a48b3;
+      border: 1px solid #9f70df;
+      padding: 8px 20px;
+      border-radius: 60px;
+      font-weight: 600;
+      transition: 0.2s;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+    }
+
+    .filter-btn.active {
+      background: #8b5cf6;
+      border-color: #fff0b5;
+      box-shadow: 0 0 15px #b77eff;
+    }
+
+    .filter-btn:hover {
+      background: #6d40c9;
+      transform: translateY(-2px);
+    }
+
+    /* chat panel */
+    .chat-panel {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .chat-icon {
+      background: #8b5cf6;
+      width: 60px;
+      height: 60px;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      transition: 0.2s;
+      border: 1px solid #dcbaff;
+    }
+
+    .chat-window {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 320px;
+      background: rgba(18, 8, 38, 0.96);
+      backdrop-filter: blur(20px);
+      border-radius: 28px;
+      padding: 1rem;
+      border: 1px solid #bd93f9;
+      box-shadow: 0 20px 35px rgba(0,0,0,0.5);
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      transition: 0.2s;
+      z-index: 1001;
+    }
+
+    .chat-window.show {
+      display: flex;
+    }
+
+    .chat-header {
+      font-weight: bold;
+      border-bottom: 1px solid #a374eb;
+      padding-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .chat-msg {
+      background: #31275e;
+      padding: 8px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+
+    .chat-input {
+      background: #21163f;
+      border: none;
+      padding: 10px;
+      border-radius: 40px;
+      color: white;
+    }
+
+    .send-chat {
+      background: #7a43e2;
+      border: none;
+      padding: 10px;
+      border-radius: 40px;
+      font-weight: bold;
+    }
+
+    /* footer */
+    .footer-note {
+      text-align: center;
+      font-size: 0.75rem;
+      margin-top: 3rem;
+      opacity: 0.7;
+    }
+    .highlight {
+      color: #ffdb8e;
+    }
+    i.fa, i.far, i.fas {
+      margin-right: 5px;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 0.8rem; }
+      .nama-produk { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="sky-bg">
+  <div class="stars"></div>
+  <div class="nebula"></div>
+</div>
+<div class="floating-particles" id="particles"></div>
+
+<div class="container">
+  <div class="header">
+    <h1><i class="fas fa-cloud-moon"></i> KAIZYE STORE <i class="fas fa-meteor"></i></h1>
+    <div class="badge-update">✨ LIST NEW UPDATE ✨ REAL PRODUCT</div>
+    <div class="contact-bar">
+      <span><i class="fab fa-whatsapp"></i> BUY FILE? PM SINI ⚠️</span>
+      <div class="whatsapp-btn" id="waAdminBtn"><i class="fab fa-whatsapp"></i> +62 882-2928-6129</div>
+      <div class="telegram-btn" id="teleBtn"><i class="fab fa-telegram"></i> t.me/KAIZYE_STORE</div>
+      <span>JIKA OFF : KENON CHAT TELEGRAM</span>
+    </div>
+  </div>
+
+  <div class="filter-buttons">
+    <div class="filter-btn active" data-filter="all">SEMUA 🔥</div>
+    <div class="filter-btn" data-filter="AIM">🎯 AIM LOCK/AIMBOT</div>
+    <div class="filter-btn" data-filter="HEADLOCK">🎯 HEADLOCK</div>
+    <div class="filter-btn" data-filter="DRAG">🐉 EZ DRAG / DRAG HS</div>
+    <div class="filter-btn" data-filter="HOLO">✨ HOLOGRAM</div>
+    <div class="filter-btn" data-filter="PREMIUM">⭐ PREMIUM/ALL TAB</div>
+  </div>
+
+  <div class="produk-grid" id="produkGrid"></div>
+
+  <div class="footer-note">
+    <p><i class="fas fa-shield-alt"></i> ADMIN HANYA MENGIRIM 1X — JAGA BAIK BAIK FILENYA <i class="fas fa-dragon"></i></p>
+    <p>💸 PAYMENT : GOPAY | DANA | SHOPEEPAY | QRIS | BT AKUN FF</p>
+    <div style="margin-top: 10px;">
+      <a href="https://whatsapp.com/channel/0029VbCdJuNDZ4LT4arD1H3v" target="_blank" style="color:#cdb5ff;">📢 SALURAN SHARE FILE FREE</a> &nbsp;|&nbsp;
+      <a href="https://whatsapp.com/channel/0029Vb72gOz4dTnLFa0Gen0G" target="_blank" style="color:#cdb5ff;">📢 TESTY</a> &nbsp;|&nbsp;
+      <a href="https://chat.whatsapp.com/BQQzBW1HCeH322ksGLbuII?mode=gi_t" target="_blank" style="color:#cdb5ff;">💬 GB TERBUKA</a>
+    </div>
+  </div>
+</div>
+
+<div class="chat-panel">
+  <div class="chat-icon" id="chatToggle"><i class="fas fa-headset"></i></div>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">💬 Chat Admin Otomatis <span id="closeChat" style="cursor:pointer;">✖️</span></div>
+    <div class="chat-msg" id="chatMsgPreview">📌 Klik produk -> otomatis kirim pesan: Nama file + Harga</div>
+    <textarea id="chatTextArea" rows="2" placeholder="Tulis pesan atau konfirmasi beli..." class="chat-input"></textarea>
+    <button id="sendChatBtn" class="send-chat">Kirim ke Admin <i class="fab fa-whatsapp"></i></button>
+    <small style="font-size:10px;">Admin akan respon via WhatsApp</small>
+  </div>
+</div>
+
+<script>
+  // ======================= DATA PRODUK LENGKAP (SEMUA LIST SESUAI PERMINTAAN) =====================
+  const products = [
+    // BEST SELLER & AIM LOCK BEST
+    { name: "🔥 AIM LOCK BEST SELLER 5K", price: "5K", category: "AIM" },
+    { name: "🔥 AIMBOT SUPER V1", price: "5K", category: "AIM" },
+    { name: "🔥 AIMBOT SUPER V2", price: "10K", category: "AIM" },
+    { name: "🎭 FILES ANOMALI", price: "15K", category: "PREMIUM" },
+    { name: "🎯 AIMLOCK ANOMALI", price: "5K", category: "AIM" },
+    { name: "🎯 AIMBOT ANOMALI", price: "5K", category: "AIM" },
+    { name: "🥶 ANOMALI FILES 🥶", price: "15K", category: "PREMIUM" },
+    { name: "💯 AIM RELATED 100%", price: "50K", category: "AIM" },
+    { name: "🎯 HEADLOCK 65%", price: "10K", category: "HEADLOCK" },
+    { name: "🎯 HEADLOCK 85%", price: "15K", category: "HEADLOCK" },
+    { name: "🎯 HEADLOCK 90%", price: "25K", category: "HEADLOCK" },
+    { name: "🔮 HEADLOCK 65% + HOLO BLUE", price: "15K", category: "HEADLOCK" },
+    { name: "💢 HEADLOCK 100% V1", price: "25K", category: "HEADLOCK" },
+    { name: "💢 HEADLOCK 100% V2", price: "30K", category: "HEADLOCK" },
+    { name: "🌀 HEADLOCK ANOMALI", price: "50K", category: "HEADLOCK" },
+    { name: "🐉 EZ DRAG 2.0", price: "10K", category: "DRAG" },
+    { name: "🐉 EZ DRAG 2.1", price: "15K", category: "DRAG" },
+    { name: "🐉 EZ DRAG 2.3", price: "20K", category: "DRAG" },
+    { name: "🐉 EZ DRAG 2.10", price: "50K", category: "DRAG" },
+    { name: "👑 EZ DRAG VIP", price: "15K", category: "DRAG" },
+    { name: "🐉 DRAG HS 40%", price: "10K", category: "DRAG" },
+    { name: "🐉 DRAG HS 70%", price: "15K", category: "DRAG" },
+    { name: "🐉 DRAG HS 80%", price: "20K", category: "DRAG" },
+    { name: "🐉 DRAG HS 90%", price: "25K", category: "DRAG" },
+    { name: "🐉 DRAG HS 100% V1", price: "30K", category: "DRAG" },
+    { name: "🐉 DRAG HS 100% V2", price: "40K", category: "DRAG" },
+    { name: "🐉 DRAG HS 100% V3", price: "50K", category: "DRAG" },
+    { name: "🐉 DRAG HS 100% V4", price: "60K", category: "DRAG" },
+    { name: "💥 DRAG EXTRIME 100%", price: "50K", category: "DRAG" },
+    { name: "🎯 AIM LOCK 81%", price: "10K", category: "AIM" },
+    { name: "🎯 AIM LOCK 90%", price: "15K", category: "AIM" },
+    { name: "🎯 AIM LOCK 100% V1", price: "20K", category: "AIM" },
+    { name: "🎯 AIM LOCK 100% V2", price: "35K", category: "AIM" },
+    { name: "🎯 AIM LOCK 100% V3", price: "45K", category: "AIM" },
+    { name: "💎 AIM LOCK VIP 80%", price: "20K", category: "AIM" },
+    { name: "💎 AIM LOCK VIP 100%", price: "25K", category: "AIM" },
+    { name: "💎 AIM LOCK VIP 100% V1", price: "35K", category: "AIM" },
+    { name: "💎 AIM LOCK VIP 100% V2", price: "40K", category: "AIM" },
+    { name: "💎 AIM LOCK VIP 100% V3", price: "50K", category: "AIM" },
+    { name: "⚡ ALL TAB HEADSHOT V2 FF MAX", price: "25K", category: "PREMIUM" },
+    { name: "⚡ ONE TAB GOOD V1", price: "15K", category: "PREMIUM" },
+    { name: "⚡ ONE TAB GOOD V2", price: "30K", category: "PREMIUM" },
+    { name: "⚡ ONE TAB HS", price: "75K", category: "PREMIUM" },
+    { name: "🤖 AIMBOT SUPERV1 (VIP)", price: "5K", category: "AIM" },
+    { name: "🤖 AIMBOT LEGIT V1", price: "5K", category: "AIM" },
+    { name: "🤖 AIMBOT LEGIT V2", price: "10K", category: "AIM" },
+    { name: "🤖 AIMBOT LEGIT V3", price: "15K", category: "AIM" },
+    { name: "🤖 AIMBOT LEGIT V4", price: "20K", category: "AIM" },
+    { name: "🔒 LOCK HEAD VIP", price: "35K", category: "HEADLOCK" },
+    { name: "🔰 V1 (PREMIUM LOCK)", price: "80K", category: "PREMIUM" },
+    { name: "🔰 V2 (PREMIUM LOCK)", price: "100K", category: "PREMIUM" },
+    { name: "🎯 AIM BOT + EXP", price: "65K", category: "AIM" },
+    { name: "🎯 AIM BOT 100% V3", price: "50K", category: "AIM" },
+    { name: "🎯 AIM BOT 100% NO DRAG HS", price: "150K", category: "AIM" },
+    { name: "🎯 AIM BOT 80% + NPC", price: "80K", category: "AIM" },
+    { name: "📛 NPC NAME ONLY", price: "35K", category: "PREMIUM" },
+    { name: "💢 AIMBOT 100% + NPC NAME", price: "200K", category: "AIM" },
+    { name: "💪 BODY HS", price: "80K", category: "AIM" },
+    { name: "💪 BODY HS VIP", price: "100K", category: "AIM" },
+    { name: "✨ HOLOGRAM 3D ALL CHAR", price: "35K", category: "HOLO" },
+    { name: "💙 HOLO BLUE V2", price: "25K", category: "HOLO" },
+    { name: "💚 HOLO GREEN", price: "15K", category: "HOLO" },
+    { name: "🗡️ HOLO SABER", price: "25K", category: "HOLO" },
+    { name: "🌈 HOLO PREMIUM", price: "35K", category: "HOLO" },
+    { name: "🧬 FILE GENOS 90%", price: "20K", category: "AIM" },
+    { name: "🧬 FILE GENOS 100%", price: "25K", category: "AIM" },
+    { name: "🎯 AIM LOCK X ANTI LAG", price: "15K", category: "AIM" },
+    { name: "⚡ MB 600%", price: "50K", category: "PREMIUM" },
+    { name: "🎨 GRAFIK MINICRAFT ALL MAP", price: "20K", category: "PREMIUM" },
+    { name: "🚁 PELICIN LAYAR || KAIZYE STORE REAL", price: "10K", category: "PREMIUM" },
+  ];
+
+  // Fungsi render produk
+  function renderProducts(filter = "all") {
+    const grid = document.getElementById("produkGrid");
+    grid.innerHTML = "";
+    const filtered = filter === "all" ? products : products.filter(p => p.category === filter);
+    filtered.forEach(prod => {
+      const card = document.createElement("div");
+      card.className = "card";
+      // animasi klik tambahan
+      card.setAttribute("data-name", prod.name);
+      card.setAttribute("data-price", prod.price);
+      // isi card
+      let categoryLabel = "";
+      if (prod.category === "AIM") categoryLabel = "🎯 AIM RELATED";
+      else if (prod.category === "HEADLOCK") categoryLabel = "🎯 HEADLOCK";
+      else if (prod.category === "DRAG") categoryLabel = "🐉 DRAG / HS";
+      else if (prod.category === "HOLO") categoryLabel = "✨ HOLOGRAM";
+      else categoryLabel = "⭐ PREMIUM / SPECIAL";
+      card.innerHTML = `
+        <div class="badge-kategori">${categoryLabel}</div>
+        <div class="nama-produk">${prod.name}</div>
+        <div class="harga">💰 ${prod.price}</div>
+        <button class="btn-beli"><i class="fab fa-whatsapp"></i> BELI SEKARANG</button>
+      `;
+      const btn = card.querySelector(".btn-beli");
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        handleBuyProduct(prod.name, prod.price, card);
+      });
+      // efek klik di card area (kece)
+      card.addEventListener("click", (e) => {
+        if (e.target !== btn) {
+          card.classList.add("card-click-effect");
+          setTimeout(() => card.classList.remove("card-click-effect"), 150);
+        }
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  // fungsi untuk chat otomatis + WA admin
+  function handleBuyProduct(nama, harga, cardElement) {
+    // efek klik pada tombol
+    const btn = cardElement.querySelector(".btn-beli");
+    btn.style.transform = "scale(0.94)";
+    setTimeout(() => btn.style.transform = "", 150);
+    // pesan otomatis: Nama file + Harga
+    const pesan = `Halo Admin Kaizye Store, saya mau beli file: ${nama} - Harga ${harga}. Terima kasih.`;
+    // munculkan chat window dan isi otomatis
+    const chatWindow = document.getElementById("chatWindow");
+    const chatText = document.getElementById("chatTextArea");
+    if (!chatWindow.classList.contains("show")) {
+      chatWindow.classList.add("show");
+    }
+    chatText.value = pesan;
+    document.getElementById("chatMsgPreview").innerHTML = `📌 Pesanan: ${nama} (${harga}) siap kirim.`;
+    // juga langsung kirim? tapi pengguna bisa konfirmasi send
+    // Bisa juga langsung redirect wa? tapi sesuai opsi kita beri tombol send
+  }
+
+  // WA admin & telegram direct
+  const waNumber = "6288229286129";
+  document.getElementById("waAdminBtn").addEventListener("click", () => {
+    window.open(`https://wa.me/${waNumber}?text=Halo%20Kaizye%20Store%2C%20saya%20mau%20beli%20file%20store`, "_blank");
+  });
+  document.getElementById("teleBtn").addEventListener("click", () => {
+    window.open("https://t.me/KAIZYE_STORE", "_blank");
+  });
+
+  // fitur kirim chat dari panel
+  document.getElementById("sendChatBtn").addEventListener("click", () => {
+    let msg = document.getElementById("chatTextArea").value.trim();
+    if (msg === "") msg = "Saya tertarik dengan file store anda.";
+    const encoded = encodeURIComponent(msg);
+    window.open(`https://wa.me/${waNumber}?text=${encoded}`, "_blank");
+    // optional close
+    document.getElementById("chatWindow").classList.remove("show");
+  });
+
+  // toggle chat window
+  const chatToggle = document.getElementById("chatToggle");
+  const chatWin = document.getElementById("chatWindow");
+  const closeChat = document.getElementById("closeChat");
+  chatToggle.addEventListener("click", () => {
+    chatWin.classList.toggle("show");
+  });
+  closeChat.addEventListener("click", () => {
+    chatWin.classList.remove("show");
+  });
+
+  // filter buttons
+  const filterBtns = document.querySelectorAll(".filter-btn");
+  filterBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      filterBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const filterVal = btn.getAttribute("data-filter");
+      renderProducts(filterVal);
+    });
+  });
+
+  // partikel bergerak dinamis
+  function createParticles() {
+    const container = document.getElementById("particles");
+    for (let i = 0; i < 60; i++) {
+      const particle = document.createElement("div");
+      particle.classList.add("particle");
+      const size = Math.random() * 6 + 2;
+      particle.style.width = size + "px";
+      particle.style.height = size + "px";
+      particle.style.left = Math.random() * 100 + "%";
+      particle.style.animationDelay = Math.random() * 15 + "s";
+      particle.style.animationDuration = Math.random() * 10 + 8 + "s";
+      particle.style.background = `rgba(${150 + Math.random() * 105}, ${100 + Math.random() * 100}, 255, 0.7)`;
+      container.appendChild(particle);
+    }
+  }
+  createParticles();
+
+  // inisiasi awal
+  renderProducts("all");
+</script>
+</body>
+</html>
